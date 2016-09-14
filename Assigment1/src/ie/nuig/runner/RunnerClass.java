@@ -3,6 +3,7 @@ package ie.nuig.runner;
 import java.util.Arrays;
 import java.util.Random;
 
+import ie.nuig.Threads.ThreadWorker;
 import ie.nuig.search.SearchAlgo;
 
 public class RunnerClass 
@@ -20,16 +21,20 @@ public class RunnerClass
 		    		anArray[i] = n;
 		    	}
 
-		    	System.out.println(Arrays.toString(anArray));
+		    	
 		   
 		
 		
 		
 		SearchAlgo s = new SearchAlgo();
-		int[] returnedArray = new 	int[20];
-		returnedArray = s.bucketSort(anArray, 20);
 		
-		System.out.println(Arrays.toString(returnedArray));
+		s.bucketSort(anArray, 1);
+		
+		
+		
+		
+		 
+		
 		
 	}
 	

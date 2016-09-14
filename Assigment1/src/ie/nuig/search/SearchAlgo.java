@@ -1,12 +1,15 @@
 package ie.nuig.search;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class SearchAlgo 
 {
 	public static int[] bucketSort(int[] numbers, int bucketCount) 
 	{
+		System.out.println("Unsorted Array: " + Arrays.toString(numbers));  //Unsorted
+		
 		if (numbers.length <= 1)
 			return numbers;
 		
@@ -47,6 +50,7 @@ public class SearchAlgo
 				k++;
 			}
 		}
+		System.out.println("Sorted Array:   " + Arrays.toString(numbers)); //Sorted
 		return numbers;
 	}
 
