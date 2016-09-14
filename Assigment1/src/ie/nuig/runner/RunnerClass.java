@@ -3,6 +3,7 @@ package ie.nuig.runner;
 import java.util.Arrays;
 import java.util.Random;
 
+
 import ie.nuig.Threads.ThreadWorker;
 import ie.nuig.search.SearchAlgo;
 
@@ -26,10 +27,13 @@ public class RunnerClass
 		
 		
 		
-		SearchAlgo s = new SearchAlgo();
+		//SearchAlgo s = new SearchAlgo();
 		
-		s.bucketSort(anArray, 1);
-		
+		//s.bucketSort(anArray, 1);
+		    	
+		    	Thread t3 = new Thread(new ThreadWorker(anArray,2));
+				
+		    	t3.start();
 		
 		
 		
