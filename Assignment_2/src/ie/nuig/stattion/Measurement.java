@@ -1,16 +1,16 @@
 package ie.nuig.stattion;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
+
+
+
 public class Measurement 
 {
 	private Integer time;
-	private double temperature;
-	
-	public Measurement(Integer time, double temperature) 
-	{
-		super();
-		this.time = time;
-		this.temperature = temperature;
-	}
+	private static double temperature;
 	
 	public Integer getTime() 
 	{
@@ -30,6 +30,20 @@ public class Measurement
 	public void setTemperature(double temperature) 
 	{
 		this.temperature = temperature;
+	}
+	
+	static Double averageTemperature(ListMeasurement bl, Integer y) 
+	{ 
+		
+		Stream<Measurement> MeasurementStream = bl.stream();  
+		
+		Stream<Measurement> filteredMeasurementsStream = MeasurementStream
+				.filter((Measurement book) -> startTime >= Measurement.temperature && Measurement.temperature <= endTime); 
+		
+		DoubleStream MeasurementtemperatureStream = filteredMeasurementsStream.mapToDouble(Measurement -> Measurement.temperature); 
+				
+		return MeasurementtemperatureStream.sum(); 
+		
 	}
 	
 	

@@ -4,44 +4,51 @@ import java.util.ArrayList;
 
 public class WeatherStation 
 {
-	
+
 	private String city;
-	private ArrayList<String> Measurement = new ArrayList<String>();
-	private static ArrayList<String> stations = new ArrayList<String>();
+	private ArrayList<Measurement> Measurement = new ArrayList<Measurement>();
+	private static ArrayList<WeatherStation> station = new ArrayList<WeatherStation>();
 	
-	
-	public WeatherStation(String city, ArrayList<String> measurement) 
+
+	public WeatherStation(String city, ArrayList<ie.nuig.stattion.Measurement> measurement) 
 	{
 		super();
 		this.city = city;
 		Measurement = measurement;
 	}
-	
-	
-	public static ArrayList<String> getStations() 
-	{
-		return stations;
-	}
-	public static void setStations(ArrayList<String> stations) 
-	{
-		WeatherStation.stations = stations;
-	}
-	public String getCity() 
-	{
+
+
+	public String getCity() {
 		return city;
 	}
-	public void setCity(String city) 
-	{
+
+
+	public void setCity(String city) {
 		this.city = city;
 	}
-	public ArrayList<String> getMeasurement() 
-	{
+
+
+	public ArrayList<Measurement> getMeasurement() {
 		return Measurement;
 	}
-	public void setMeasurement(ArrayList<String> measurement) 
-	{
+
+
+	public void setMeasurement(ArrayList<Measurement> measurement) {
 		Measurement = measurement;
 	}
+
+
+	public static ArrayList<WeatherStation> getStation() {
+		return station;
+	}
+
+
+	public static void setStation(ArrayList<WeatherStation> station) {
+		WeatherStation.station = station;
+	}
+	
+	
+	
 	
 
 }
