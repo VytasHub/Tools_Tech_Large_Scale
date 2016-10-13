@@ -1,18 +1,28 @@
 package ie.nuig.stattion;
 
-import java.awt.List;
+
 import java.util.ArrayList;
-import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
+
 
 
 
 public class Measurement 
 {
-	private Integer time;
-	private static double temperature;
-	private ArrayList<Measurement> Measurement = new ArrayList<Measurement>();
 	
+
+	private Integer time;
+	private double temperature;
+	private ArrayList<Measurement> Measurement = new ArrayList<Measurement>(); //Declaring Measurement array list so each station can have multiply measurements objects
+	
+	
+	public Measurement(Integer time, double temperature) //Constructor
+	{
+		this.time = time;
+		this.temperature = temperature;
+		
+	}
+	
+	//Simple Getters Setters
 	public Integer getTime() 
 	{
 		return time;
@@ -33,18 +43,12 @@ public class Measurement
 		this.temperature = temperature;
 	}
 	
-	static Double averageTemperature(ArrayList<Measurement> bl,double startTime,double endTime) 
-	{ 
-		
-		Stream<Measurement> MeasurementStream = bl.stream();  
-		
-		Stream<Measurement> filteredMeasurementsStream = MeasurementStream
-				.filter((Measurement measurement) -> startTime >= measurement.temperature && measurement.temperature <= endTime); 
-		
-		DoubleStream MeasurementtemperatureStream = filteredMeasurementsStream.mapToDouble(Measurement -> Measurement.temperature); 
-				
-		return MeasurementtemperatureStream.sum(); 
-		
+	
+	//For readability purposes
+	@Override
+	public String toString() 
+	{
+		return "Measurement [time=" + time + ", temperature=" + temperature + "]";
 	}
 	
 	
