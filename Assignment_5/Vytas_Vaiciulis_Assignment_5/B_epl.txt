@@ -1,0 +1,82 @@
+create schema Pickup(taxi_id int, location_id int);
+create schema Dropoff(taxi_id int, dropoffLocation int, amount int);
+
+create schema Distance(location_id int,dropoffLocation int, amount int);
+
+
+insert into Distance select pick.location_id as location_id,drop.dropoffLocation as dropoffLocation,
+drop.amount as amount
+
+from pattern[every pick=Pickup ->(drop=Dropoff(taxi_id = pick.taxi_id)
+
+where timer:within(30 min))];
+
+
+select location_id, dropoffLocation, sum(amount) as sum
+
+from Distance 
+group by location_id, dropoffLocation
+
+output all order by sum desc limit 10
+
+
+
+
+
+
+
+
+
+
+Pickup={taxi_id = 10, location_id = 1}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 10, dropoffLocation = 2, amount  = 100}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 10, dropoffLocation = 3, amount  = 100}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 10, dropoffLocation = 3, amount  = 110}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 10, dropoffLocation = 3, amount  = 130}
+t=t.plus(5 minutes)
+
+Pickup={taxi_id = 20, location_id = 1}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 20, dropoffLocation = 3, amount  = 140}
+t=t.plus(5 minutes)
+
+Pickup={taxi_id = 30, location_id = 1}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 30, dropoffLocation = 3, amount  = 140}
+t=t.plus(5 minutes)
+
+Pickup={taxi_id = 40, location_id = 6}
+t=t.plus(5 minutes)
+
+Dropoff ={taxi_id = 40, dropoffLocation = 7, amount  = 140}
+t=t.plus(5 minutes)
+
+
+
+
+
+At: 2001-01-01 08:05:00.000 Statement: Stmt-4  Insert  Distance={location_id=1, dropoffLocation=2, amount=100} 
+Statement: Stmt-5  Insert  Stmt-5-output={location_id=1, dropoffLocation=2, sum=100} 
+
+At: 2001-01-01 08:30:00.000 Statement: Stmt-4  Insert  Distance={location_id=1, dropoffLocation=3, amount=140} 
+Statement: Stmt-5  Insert  Stmt-5-output={location_id=1, dropoffLocation=3, sum=140} 
+
+At: 2001-01-01 08:40:00.000 Statement: Stmt-4  Insert  Distance={location_id=1, dropoffLocation=3, amount=140} 
+Statement: Stmt-5  Insert  Stmt-5-output={location_id=1, dropoffLocation=3, sum=280} 
+
+At: 2001-01-01 08:50:00.000 Statement: Stmt-4  Insert  Distance={location_id=6, dropoffLocation=7, amount=140} 
+Statement: Stmt-5  Insert  Stmt-5-output={location_id=6, dropoffLocation=7, sum=140} 
+
+
+
+

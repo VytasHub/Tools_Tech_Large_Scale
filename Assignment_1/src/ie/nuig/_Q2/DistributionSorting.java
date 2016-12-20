@@ -1,35 +1,21 @@
-package ie.nuig.Threads;
+package ie.nuig._Q2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
-import ie.nuig.search.SearchAlgo;
 
-public class ThreadWorker  implements Runnable 
+import ie.nuig._Q2.ThreadWorker;
+
+public class DistributionSorting 
 {
-	private int bucketCount;
-	public ThreadWorker(int[] numbers, int bucketCount) 
-	{
-		super();
-		this.numbers = numbers;
-		this.bucketCount = bucketCount;
-		
-	}
+	private static ArrayList<Thread> sortedBuckets = new ArrayList<Thread>();//Making ArrayList of threads, good house keeping
 
 
-	private int[] numbers;
-	
-
-	public void run() 
-	{
-		try 
+	 
+		public int[] bucketSort(int[] numbers, int bucketCount) throws InterruptedException 
 		{
-			System.out.println("Unsorted Array: " + Arrays.toString(numbers));  //Unsorted
 			
 			if (numbers.length <= 1)
-				System.out.println("No numbers to sort");
-				//return numbers;
+				return numbers;
 			
 			int maxVal = numbers[0];
 			int minVal = numbers[0];
@@ -47,8 +33,10 @@ public class ThreadWorker  implements Runnable
 																				// bucket
 			ArrayList<Integer> buckets[] = new ArrayList[bucketCount];
 			for (int i = 0; i < bucketCount; i++) // initialize buckets (initially
-													// empty)
+			{										// empty)
 				buckets[i] = new ArrayList<Integer>();
+				//sortedBuckets.set(i, null);
+			}
 			
 			for (int i = 0; i < numbers.length; i++) // distribute numbers to
 														// buckets
@@ -58,25 +46,35 @@ public class ThreadWorker  implements Runnable
 			
 			for (int i = 0; i < buckets.length; i++) 
 			{
-				Collections.sort(buckets[i]); // calls Java's built-in merge sort
-												// (as a kind of “helper” sort)
+				ThreadWorker helper = new ThreadWorker(buckets[i]);//Making ThreadWorker helper and assigning bucket to it
+				
+				sortedBuckets.add(i, new Thread(helper));  //Creating Thread and adding it to sortedBuckets Thread ArrayList
+				
+				sortedBuckets.get(i).start();// Starting all the Threads from the sortedBuckets ArrayList
+				
+			}
+		
+			for (int i = 0; i < buckets.length; i++) //t for threads
+			{ 
+				sortedBuckets.get(i).join();//Joining all the Threads joins only when threads are finished
+				
 				for (int j = 0; j < buckets[i].size(); j++) 
 				{ // update array with
-																// the bucket
-																// content
+					
 					numbers[k] = buckets[i].get(j);
 					k++;
 				}
+				
 			}
-			System.out.println("Sorted Array:   " + Arrays.toString(numbers)); //Sorted
 			
-		} 
-		catch (Exception e) 
-		{
-			// TODO: handle exception
+			return numbers;
+			
 		}
+
 		
 		
-	}
+		
+
+		
 
 }
